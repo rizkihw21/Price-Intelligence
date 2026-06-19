@@ -14,20 +14,28 @@ export default function Home() {
   const [searchQuery, setSearchQuery] = useState('');
   const [properties, setProperties] = useState<Property[]>([]);
   const [loading, setLoading] = useState(false);
-  const [stats, setStats] = useState(null);
+  const [stats, setStats] = useState<any>(null);
+  const [error, setError] = useState<any>(null);
 
   const handleSearch = async (query: string) => {
     setLoading(true);
     setSearchQuery(query);
+    setProperties([]);
+    setStats(null);
+    setError(null);
     try {
       const response = await axios.get(`/api/scrape?query=${encodeURIComponent(query)}`);
       const data = response.data.properties || [];
       setProperties(data);
       const calculatedStats = calculateStatistics(data);
       setStats(calculatedStats);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error:', error);
-      alert('Failed to fetch data. Please try again.');
+      if (error.response?.status === 404) {
+        setError(error.response.data);
+      } else {
+        setError({ error: 'Failed to fetch data', message: 'Please try again later.' });
+      }
       setProperties([]);
       setStats(null);
     } finally {
@@ -37,7 +45,6 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-[#F7F7F7] flex flex-col font-sans">
-      {/* Header / Navbar */}
       <header className="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
           <div className="flex items-center gap-2">
@@ -51,7 +58,6 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Hero Section */}
       <section className="bg-gradient-to-b from-white to-[#F7F7F7] py-16 px-6 border-b border-gray-100">
         <div className="max-w-4xl mx-auto text-center">
           <span className="inline-block bg-yellow-100 text-yellow-800 text-xs px-3 py-1.5 rounded-full font-bold uppercase tracking-wider mb-4">
@@ -67,9 +73,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Main Container */}
       <div className="max-w-6xl mx-auto px-6 py-12 flex-1 w-full space-y-12">
-        {/* Loading State */}
         {loading && (
           <section className="space-y-4">
             <div className="flex items-center gap-3">
@@ -80,16 +84,37 @@ export default function Home() {
           </section>
         )}
 
-        {/* Results Section */}
+        {!loading && error && (
+          <div className="bg-white p-12 rounded-2xl border border-red-100 text-center shadow-sm">
+            <span className="text-5xl block mb-4">⚠️</span>
+            <p className="text-red-600 text-lg font-bold">{error.error}</p>
+            <p className="text-gray-500 text-sm mt-2">{error.message}</p>
+            {error.availableCities && (
+              <div className="mt-6">
+                <p className="text-gray-600 font-semibold">Try these popular areas:</p>
+                <div className="flex justify-center gap-2 mt-2 flex-wrap">
+                  {error.availableCities.map((city: string) => (
+                    <button
+                      key={city}
+                      onClick={() => handleSearch(city)}
+                      className="px-4 py-2 border border-gray-200 rounded-full text-xs font-bold text-gray-500 hover:border-sh-yellow hover:text-sh-dark hover:bg-sh-yellow/10 transition duration-200"
+                    >
+                      📍 {city}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
         {!loading && properties.length > 0 && stats && (
           <>
-            {/* Stats Cards */}
             <section className="space-y-4">
               <div className="flex justify-between items-end flex-wrap gap-2">
                 <h3 className="text-2xl font-bold text-sh-dark">
                   📈 Market Summary: <span className="text-blue-600">{searchQuery}</span>
                 </h3>
-                {/* Export Buttons */}
                 <div className="flex gap-2">
                   <button
                     onClick={() => exportToCSV(properties, searchQuery)}
@@ -115,13 +140,11 @@ export default function Home() {
               />
             </section>
 
-            {/* Visualisation Chart */}
             <section className="space-y-4">
               <h3 className="text-2xl font-bold text-sh-dark">📊 Market Trends</h3>
               <PriceChart data={stats.byBedroom} />
             </section>
 
-            {/* Property Table */}
             <section className="space-y-4">
               <h3 className="text-2xl font-bold text-sh-dark">📋 Unit Listings</h3>
               <PropertyTable properties={properties} />
@@ -129,20 +152,10 @@ export default function Home() {
           </>
         )}
 
-        {/* Empty State */}
-        {!loading && properties.length === 0 && searchQuery && (
-          <div className="bg-white p-12 rounded-2xl border border-gray-100 text-center shadow-sm">
-            <span className="text-5xl block mb-4">🔍</span>
-            <p className="text-sh-dark text-lg font-bold">No Properties Found</p>
-            <p className="text-gray-400 text-sm mt-1">Try another area or check your internet connection.</p>
-          </div>
-        )}
-
-        {/* Initial Welcome State */}
-        {!loading && properties.length === 0 && !searchQuery && (
+        {!loading && properties.length === 0 && !searchQuery && !error && (
           <div className="bg-white p-16 rounded-3xl border border-gray-100 text-center shadow-sm max-w-3xl mx-auto">
             <span className="text-5xl block mb-4">💡</span>
-            <p className="text-sh-dark text-xl font-bold">Start Exploring Propertys</p>
+            <p className="text-sh-dark text-xl font-bold">Start Exploring Properties</p>
             <p className="text-gray-400 text-sm mt-2 max-w-md mx-auto">
               Type any Malaysian city or area name above to extract current rental prices and statistics.
             </p>
@@ -161,7 +174,6 @@ export default function Home() {
         )}
       </div>
 
-      {/* Footer */}
       <footer className="bg-sh-dark text-gray-400 text-center py-10 border-t border-gray-800 mt-20">
         <div className="max-w-6xl mx-auto px-6 space-y-4">
           <p className="text-xl font-extrabold text-white">
