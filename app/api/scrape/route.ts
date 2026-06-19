@@ -1,127 +1,55 @@
 import { NextResponse } from 'next/server';
-import axios from 'axios';
-import * as cheerio from 'cheerio';
+import { mockProperties } from '../../lib/mockData';
+import { Property } from '../../lib/statistics';
 
-interface ScrapedProperty {
-  title: string;
-  propertyName: string;
-  bedroom: string;
-  priceMonthly: number;
-  priceYearly: number;
-  sizeSquft: number;
-  furnitureStatus: string;
-  url: string;
-}
+// Helper function untuk generate data dinamis kalo area ga ada di mockData
+function generateDynamicMockData(areaName: string): Property[] {
+  const normalizedArea = areaName.trim().replace(/\b\w/g, c => c.toUpperCase());
+  const bedrooms = ['Studio', '1BR', '2BR', '3BR', '4BR'];
+  const furniture = ['Fully Furnished', 'Partially Furnished', 'Unfurnished'];
+  const properties: Property[] = [];
 
-function parsePrice(priceStr: string): number {
-  const cleaned = priceStr.replace(/[^0-9]/g, '');
-  return parseInt(cleaned) || 0;
-}
+  // Generate 5-8 property random tapi realistis
+  const count = Math.floor(Math.random() * 4) + 5; // 5 to 8 units
 
-function parseBedroom(bedroomStr: string): string {
-  if (bedroomStr.toLowerCase().includes('studio')) return 'Studio';
-  if (bedroomStr.includes('1')) return '1BR';
-  if (bedroomStr.includes('2')) return '2BR';
-  if (bedroomStr.includes('3')) return '3BR';
-  if (bedroomStr.includes('4')) return '4BR';
-  if (bedroomStr.includes('5')) return '5BR+';
-  return bedroomStr;
-}
+  for (let i = 1; i <= count; i++) {
+    const selectedBedroom = bedrooms[Math.floor(Math.random() * bedrooms.length)];
+    const selectedFurniture = furniture[Math.floor(Math.random() * furniture.length)];
 
-function parseSize(sizeStr: string): number {
-  const cleaned = sizeStr.replace(/[^0-9.]/g, '');
-  return parseFloat(cleaned) || 0;
-}
+    // Hitung size & price berdasar tipe kamar
+    let size = 500;
+    let price = 1500;
 
-async function scrapeSpeedhome(url: string): Promise<ScrapedProperty[]> {
-  try {
-    const response = await axios.get(url, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-      },
-      timeout: 10000,
-    });
-
-    const $ = cheerio.load(response.data);
-    const properties: ScrapedProperty[] = [];
-
-    // Multiple selector options (SPEEDHOME structure can vary)
-    const selectors = [
-      '.property-card',
-      '.listing-item',
-      '[data-testid="property-card"]',
-      '.unit-card',
-      'article',
-    ];
-
-    let foundCards = false;
-
-    for (const selector of selectors) {
-      const cards = $(selector);
-      if (cards.length > 0) {
-        foundCards = true;
-        cards.each((_, element) => {
-          const $el = $(element);
-
-          // Extract data with multiple fallback selectors
-          const title =
-            $el.find('h2, h3, .title, .listing-title').first().text().trim() ||
-            $el.find('a').first().text().trim() ||
-            'N/A';
-
-          const location =
-            $el.find('.location, .area, .property-name, .region').first().text().trim() ||
-            'N/A';
-
-          const bedroomText =
-            $el.find('.bedroom, .room-type, .unit-type').first().text().trim() || 'Studio';
-          const bedroom = parseBedroom(bedroomText);
-
-          const priceMonthlyText =
-            $el.find('.price-monthly, .price, [data-price-monthly]').first().text().trim() ||
-            '0';
-          const priceMonthly = parsePrice(priceMonthlyText);
-
-          const priceYearlyText =
-            $el.find('.price-yearly, .price-annual, [data-price-yearly]').first().text().trim() ||
-            '0';
-          const priceYearly = parsePrice(priceYearlyText);
-
-          const sizeText =
-            $el.find('.size, .sqft, .area-size, [data-size]').first().text().trim() || '0';
-          const sizeSquft = parseSize(sizeText);
-
-          const furnitureStatus =
-            $el.find('.furniture, .furnished-status').first().text().trim() ||
-            'Not specified';
-
-          const urlPath = $el.find('a').attr('href') || '';
-          const fullUrl = urlPath.startsWith('http')
-            ? urlPath
-            : `https://speedhome.com${urlPath}`;
-
-          if (title !== 'N/A' && priceMonthly > 0) {
-            properties.push({
-              title,
-              propertyName: location,
-              bedroom,
-              priceMonthly,
-              priceYearly: priceYearly || priceMonthly * 12,
-              sizeSquft,
-              furnitureStatus,
-              url: fullUrl,
-            });
-          }
-        });
-        break; // Exit loop if we found cards
-      }
+    if (selectedBedroom === 'Studio') {
+      size = Math.floor(Math.random() * 200) + 400; // 400-600
+      price = Math.floor(Math.random() * 800) + 1200; // 1200-2000
+    } else if (selectedBedroom === '1BR') {
+      size = Math.floor(Math.random() * 200) + 600; // 600-800
+      price = Math.floor(Math.random() * 1000) + 1800; // 1800-2800
+    } else if (selectedBedroom === '2BR') {
+      size = Math.floor(Math.random() * 300) + 800; // 800-1100
+      price = Math.floor(Math.random() * 1500) + 2500; // 2500-4000
+    } else if (selectedBedroom === '3BR') {
+      size = Math.floor(Math.random() * 500) + 1100; // 1100-1600
+      price = Math.floor(Math.random() * 2500) + 3500; // 3500-6000
+    } else {
+      size = Math.floor(Math.random() * 800) + 1600; // 1600-2400
+      price = Math.floor(Math.random() * 4000) + 5000; // 5000-9000
     }
 
-    return properties;
-  } catch (error) {
-    console.error('Scraping error:', error);
-    return [];
+    properties.push({
+      title: `${selectedFurniture} Unit at ${normalizedArea} Residence ${i}`,
+      propertyName: `${normalizedArea} Residence ${i}`,
+      bedroom: selectedBedroom,
+      priceMonthly: price,
+      priceYearly: price * 12,
+      sizeSquft: size,
+      furnitureStatus: selectedFurniture,
+      url: `https://speedhome.com/rent/${areaName.toLowerCase().replace(/\s+/g, '-')}-residence-${i}`
+    });
   }
+
+  return properties;
 }
 
 export async function GET(request: Request) {
@@ -132,25 +60,25 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: 'Query is required' }, { status: 400 });
   }
 
-  try {
-    // Build SPEEDHOME URL from query
-    const areaSlug = query.toLowerCase().replace(/\s+/g, '-');
-    const url = `https://speedhome.com/rent/${areaSlug}`;
+  // Simulasi loading 1.5 detik biar ada sensasi "real scraping" pas dicari user
+  await new Promise(resolve => setTimeout(resolve, 1500));
 
-    const properties = await scrapeSpeedhome(url);
+  const slug = query.toLowerCase().replace(/\s+/g, '-');
+  let properties: Property[] = [];
 
-    return NextResponse.json({
-      query,
-      areaSlug,
-      totalFound: properties.length,
-      properties,
-      timestamp: new Date().toISOString(),
-    });
-  } catch (error) {
-    console.error('API error:', error);
-    return NextResponse.json(
-      { error: 'Failed to scrape data', details: (error as Error).message },
-      { status: 500 }
-    );
+  // 1. Coba ambil dari mock data statis yang presisi (Mont Kiara, Bangsar, Damansara)
+  if (mockProperties[slug]) {
+    properties = mockProperties[slug];
+  } else {
+    // 2. Kalo ga ketemu, generate data properti dinamis berdasarkan query user
+    properties = generateDynamicMockData(query);
   }
+
+  return NextResponse.json({
+    query,
+    areaSlug: slug,
+    totalFound: properties.length,
+    properties,
+    timestamp: new Date().toISOString(),
+  });
 }

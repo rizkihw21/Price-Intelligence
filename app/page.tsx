@@ -6,6 +6,7 @@ import SearchBar from './components/SearchBar';
 import PriceSummaryCard from './components/PriceSummaryCard';
 import PropertyTable from './components/PropertyTable';
 import LoadingSkeleton from './components/LoadingSkeleton';
+import PriceChart from './components/PriceChart';
 import { calculateStatistics, Property } from './lib/statistics';
 import { exportToCSV, exportToJSON } from './lib/export';
 
@@ -95,6 +96,14 @@ export default function Home() {
               >
                 📥 Download JSON
               </button>
+            </section>
+
+            {/* Visualisasi Grafik */}
+            <section>
+              <h2 className="text-2xl font-bold text-gray-800 mb-4">
+                📈 Visualisasi Analisis Harga
+              </h2>
+              <PriceChart data={stats.byBedroom} />
             </section>
 
             {/* Property Table */}
