@@ -27,7 +27,7 @@ export default function Home() {
       setStats(calculatedStats);
     } catch (error) {
       console.error('Error:', error);
-      alert('Gagal mengambil data. Cek console untuk detail error.');
+      alert('Failed to fetch data. Please try again.');
       setProperties([]);
       setStats(null);
     } finally {
@@ -36,30 +36,46 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-      {/* Header */}
-      <header className="bg-white shadow-md sticky top-0 z-50">
-        <div className="max-w-6xl mx-auto px-4 py-6">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-800">
-            🏠 SPEEDHOME Price Intelligence
-          </h1>
-          <p className="text-gray-600 mt-1">
-            Analisis harga sewa properti dari SPEEDHOME.com secara real-time
-          </p>
+    <main className="min-h-screen bg-[#F7F7F7] flex flex-col font-sans">
+      {/* Header / Navbar */}
+      <header className="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-50">
+        <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+          <div className="flex items-center gap-2">
+            <span className="text-3xl font-extrabold text-sh-dark flex items-center">
+              SPEED<span className="text-[#E6B800] bg-sh-dark px-2.5 py-1 rounded-xl ml-1 text-white text-2xl font-black">HOME</span>
+            </span>
+          </div>
+          <span className="text-sm font-bold text-gray-500 uppercase tracking-wider hidden sm:inline">
+            Price Intelligence App
+          </span>
         </div>
       </header>
 
-      {/* Main Content */}
-      <div className="max-w-6xl mx-auto px-4 py-8 space-y-8">
-        {/* Search Section */}
-        <div className="bg-white p-6 rounded-xl shadow-lg">
+      {/* Hero Section */}
+      <section className="bg-gradient-to-b from-white to-[#F7F7F7] py-16 px-6 border-b border-gray-100">
+        <div className="max-w-4xl mx-auto text-center">
+          <span className="inline-block bg-yellow-100 text-yellow-800 text-xs px-3 py-1.5 rounded-full font-bold uppercase tracking-wider mb-4">
+            🚀 100% Automated Scraping
+          </span>
+          <h2 className="text-4xl md:text-5xl font-black text-sh-dark tracking-tight leading-tight">
+            Find the Fair Rent Price
+          </h2>
+          <p className="text-gray-500 text-lg md:text-xl mt-3 max-w-2xl mx-auto font-medium">
+            Analyze property listings, average rates, and sizes from SPEEDHOME.com instantly.
+          </p>
           <SearchBar onSearch={handleSearch} loading={loading} />
         </div>
+      </section>
 
+      {/* Main Container */}
+      <div className="max-w-6xl mx-auto px-6 py-12 flex-1 w-full space-y-12">
         {/* Loading State */}
         {loading && (
-          <section>
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">⏳ Mengambil data...</h2>
+          <section className="space-y-4">
+            <div className="flex items-center gap-3">
+              <span className="animate-spin text-2xl">⏳</span>
+              <h3 className="text-xl font-bold text-sh-dark">Scraping data from SPEEDHOME...</h3>
+            </div>
             <LoadingSkeleton />
           </section>
         )}
@@ -67,11 +83,28 @@ export default function Home() {
         {/* Results Section */}
         {!loading && properties.length > 0 && stats && (
           <>
-            {/* Statistics Cards */}
-            <section>
-              <h2 className="text-2xl font-bold text-gray-800 mb-4">
-                📊 Ringkasan Harga - {searchQuery}
-              </h2>
+            {/* Stats Cards */}
+            <section className="space-y-4">
+              <div className="flex justify-between items-end flex-wrap gap-2">
+                <h3 className="text-2xl font-bold text-sh-dark">
+                  📈 Market Summary: <span className="text-blue-600">{searchQuery}</span>
+                </h3>
+                {/* Export Buttons */}
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => exportToCSV(properties, searchQuery)}
+                    className="px-5 py-2.5 bg-green-600 text-white font-bold text-sm rounded-xl hover:bg-green-700 hover:shadow-md transition duration-200"
+                  >
+                    Download CSV
+                  </button>
+                  <button
+                    onClick={() => exportToJSON(properties, stats, searchQuery)}
+                    className="px-5 py-2.5 bg-sh-dark text-white font-bold text-sm rounded-xl hover:bg-black hover:shadow-md transition duration-200"
+                  >
+                    Download JSON
+                  </button>
+                </div>
+              </div>
               <PriceSummaryCard
                 averagePrice={stats.averagePrice}
                 medianPrice={stats.medianPrice}
@@ -82,35 +115,15 @@ export default function Home() {
               />
             </section>
 
-            {/* Export Buttons */}
-            <section className="flex gap-3 flex-wrap">
-              <button
-                onClick={() => exportToCSV(properties, searchQuery)}
-                className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 font-semibold transition"
-              >
-                📥 Download CSV
-              </button>
-              <button
-                onClick={() => exportToJSON(properties, stats, searchQuery)}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold transition"
-              >
-                📥 Download JSON
-              </button>
-            </section>
-
-            {/* Visualisasi Grafik */}
-            <section>
-              <h2 className="text-2xl font-bold text-gray-800 mb-4">
-                📈 Visualisasi Analisis Harga
-              </h2>
+            {/* Visualisation Chart */}
+            <section className="space-y-4">
+              <h3 className="text-2xl font-bold text-sh-dark">📊 Market Trends</h3>
               <PriceChart data={stats.byBedroom} />
             </section>
 
             {/* Property Table */}
-            <section>
-              <h2 className="text-2xl font-bold text-gray-800 mb-4">
-                📋 Daftar Unit ({properties.length} properti)
-              </h2>
+            <section className="space-y-4">
+              <h3 className="text-2xl font-bold text-sh-dark">📋 Unit Listings</h3>
               <PropertyTable properties={properties} />
             </section>
           </>
@@ -118,29 +131,49 @@ export default function Home() {
 
         {/* Empty State */}
         {!loading && properties.length === 0 && searchQuery && (
-          <div className="bg-white p-8 rounded-lg text-center">
-            <p className="text-gray-500 text-lg">
-              Belum ada hasil. Coba area lain atau cek koneksi.
-            </p>
+          <div className="bg-white p-12 rounded-2xl border border-gray-100 text-center shadow-sm">
+            <span className="text-5xl block mb-4">🔍</span>
+            <p className="text-sh-dark text-lg font-bold">No Properties Found</p>
+            <p className="text-gray-400 text-sm mt-1">Try another area or check your internet connection.</p>
           </div>
         )}
 
-        {/* Initial State */}
+        {/* Initial Welcome State */}
         {!loading && properties.length === 0 && !searchQuery && (
-          <div className="bg-white p-12 rounded-lg text-center">
-            <p className="text-gray-500 text-lg mb-4">
-              👆 Mulai dengan memasukkan nama area atau apartemen di atas
+          <div className="bg-white p-16 rounded-3xl border border-gray-100 text-center shadow-sm max-w-3xl mx-auto">
+            <span className="text-5xl block mb-4">💡</span>
+            <p className="text-sh-dark text-xl font-bold">Start Exploring Propertys</p>
+            <p className="text-gray-400 text-sm mt-2 max-w-md mx-auto">
+              Type any Malaysian city or area name above to extract current rental prices and statistics.
             </p>
-            <p className="text-gray-400">
-              Contoh: Mont Kiara, Bangsar, Damansara, Sentosa
-            </p>
+            <div className="flex justify-center gap-2 mt-6 flex-wrap">
+              {["Mont Kiara", "Bangsar", "Damansara"].map((area) => (
+                <button
+                  key={area}
+                  onClick={() => handleSearch(area)}
+                  className="px-4 py-2 border border-gray-200 rounded-full text-xs font-bold text-gray-500 hover:border-sh-yellow hover:text-sh-dark hover:bg-sh-yellow/10 transition duration-200"
+                >
+                  📍 {area}
+                </button>
+              ))}
+            </div>
           </div>
         )}
       </div>
 
       {/* Footer */}
-      <footer className="bg-gray-800 text-gray-300 text-center py-6 mt-12">
-        <p>Data diambil dari SPEEDHOME.com | © 2026</p>
+      <footer className="bg-sh-dark text-gray-400 text-center py-10 border-t border-gray-800 mt-20">
+        <div className="max-w-6xl mx-auto px-6 space-y-4">
+          <p className="text-xl font-extrabold text-white">
+            SPEED<span className="text-sh-yellow">HOME</span> Price Intelligence
+          </p>
+          <p className="text-xs text-gray-500 max-w-md mx-auto leading-relaxed">
+            This dashboard is an assessment project created for Jendela360. All property listing data is fetched dynamically from SPEEDHOME.com.
+          </p>
+          <div className="pt-4 border-t border-gray-800 text-xs text-gray-600">
+            © 2026 SPEEDHOME Price Intelligence. All rights reserved.
+          </div>
+        </div>
       </footer>
     </main>
   );

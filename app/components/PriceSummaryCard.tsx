@@ -10,51 +10,30 @@ interface PriceSummaryProps {
 }
 
 export default function PriceSummaryCard({
-  averagePrice,
-  medianPrice,
-  minPrice,
-  maxPrice,
-  totalUnits,
-  averageSize,
+  averagePrice, medianPrice, minPrice, maxPrice, totalUnits, averageSize,
 }: PriceSummaryProps) {
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('ms-MY', {
-      style: 'currency',
-      currency: 'MYR',
+      style: 'currency', currency: 'MYR', maximumFractionDigits: 0
     }).format(price);
   };
 
+  const Card = ({ title, value, subtitle }: { title: string, value: string | number, subtitle?: string }) => (
+    <div className="bg-white p-6 rounded-2xl border-t-4 border-sh-yellow shadow-sm hover:shadow-md transition duration-200">
+      <p className="text-gray-500 text-xs font-semibold uppercase tracking-wider">{title}</p>
+      <p className="text-3xl font-bold text-sh-dark mt-2">{value}</p>
+      {subtitle && <p className="text-gray-400 text-xs mt-1">{subtitle}</p>}
+    </div>
+  );
+
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-lg border border-blue-200">
-        <p className="text-gray-600 text-sm font-semibold">Total Unit</p>
-        <p className="text-3xl font-bold text-blue-600 mt-2">{totalUnits}</p>
-      </div>
-
-      <div className="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-lg border border-green-200">
-        <p className="text-gray-600 text-sm font-semibold">Rata-rata Harga</p>
-        <p className="text-2xl font-bold text-green-600 mt-2">{formatPrice(averagePrice)}</p>
-      </div>
-
-      <div className="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-lg border border-purple-200">
-        <p className="text-gray-600 text-sm font-semibold">Median Harga</p>
-        <p className="text-2xl font-bold text-purple-600 mt-2">{formatPrice(medianPrice)}</p>
-      </div>
-
-      <div className="bg-gradient-to-br from-orange-50 to-orange-100 p-6 rounded-lg border border-orange-200">
-        <p className="text-gray-600 text-sm font-semibold">Harga Terendah</p>
-        <p className="text-2xl font-bold text-orange-600 mt-2">{formatPrice(minPrice)}</p>
-      </div>
-
-      <div className="bg-gradient-to-br from-red-50 to-red-100 p-6 rounded-lg border border-red-200">
-        <p className="text-gray-600 text-sm font-semibold">Harga Tertinggi</p>
-        <p className="text-2xl font-bold text-red-600 mt-2">{formatPrice(maxPrice)}</p>
-      </div>
-
-      <div className="bg-gradient-to-br from-cyan-50 to-cyan-100 p-6 rounded-lg border border-cyan-200">
-        <p className="text-gray-600 text-sm font-semibold">Rata-rata Ukuran</p>
-        <p className="text-2xl font-bold text-cyan-600 mt-2">{averageSize.toFixed(0)} sqft</p>
-      </div>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <Card title="Total Units Found" value={totalUnits} subtitle="Active Listings Scraped" />
+      <Card title="Average Price" value={formatPrice(averagePrice)} subtitle="Per Month Estimate" />
+      <Card title="Median Price" value={formatPrice(medianPrice)} subtitle="Per Month Estimate" />
+      <Card title="Lowest Price" value={formatPrice(minPrice)} subtitle="Starting From" />
+      <Card title="Highest Price" value={formatPrice(maxPrice)} subtitle="Up To" />
+      <Card title="Average Size" value={`${averageSize.toFixed(0)} sqft`} subtitle="Estimated Area" />
     </div>
   );
 }

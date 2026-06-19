@@ -18,21 +18,24 @@ export default function SearchBar({ onSearch, loading }: SearchBarProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="w-full">
-      <div className="flex gap-3 flex-col sm:flex-row">
-        <input
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Cari area/apartemen (misal: Mont Kiara, Bangsar...)"
-          className="flex-1 px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 transition"
-        />
+    <form onSubmit={handleSubmit} className="w-full max-w-4xl mx-auto mt-8">
+      <div className="flex gap-2 flex-col sm:flex-row bg-white p-2 rounded-2xl shadow-lg border border-gray-100">
+        <div className="flex-1 flex items-center px-4">
+          <span className="text-gray-400 text-2xl mr-3">🔍</span>
+          <input
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Search area (e.g., Mont Kiara, Bangsar...)"
+            className="w-full py-4 bg-transparent focus:outline-none text-lg text-sh-dark placeholder-gray-400"
+          />
+        </div>
         <button
           type="submit"
           disabled={loading}
-          className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-400 font-semibold transition"
+          className="px-10 py-4 bg-sh-yellow text-sh-dark rounded-xl hover:bg-yellow-400 disabled:opacity-50 font-bold text-lg transition duration-200"
         >
-          {loading ? '⏳ Mencari...' : '🔍 Cari'}
+          {loading ? 'Searching...' : 'Search'}
         </button>
       </div>
     </form>

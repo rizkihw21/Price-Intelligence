@@ -11,76 +11,69 @@ interface Property {
   url: string;
 }
 
-interface PropertyTableProps {
-  properties: Property[];
-}
-
-export default function PropertyTable({ properties }: PropertyTableProps) {
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('ms-MY', {
-      style: 'currency',
-      currency: 'MYR',
-      maximumFractionDigits: 0,
-    }).format(price);
-  };
+export default function PropertyTable({ properties }: { properties: Property[] }) {
+  const formatPrice = (price: number) =>
+    new Intl.NumberFormat('ms-MY', { style: 'currency', currency: 'MYR', maximumFractionDigits: 0 }).format(price);
 
   return (
-    <div className="overflow-x-auto rounded-lg border border-gray-200 shadow-sm">
-      <table className="w-full text-sm">
-        <thead className="bg-gray-100 border-b border-gray-200 sticky top-0">
-          <tr>
-            <th className="px-4 py-3 text-left font-semibold text-gray-700">Judul</th>
-            <th className="px-4 py-3 text-left font-semibold text-gray-700">Properti</th>
-            <th className="px-4 py-3 text-center font-semibold text-gray-700">Kamar</th>
-            <th className="px-4 py-3 text-right font-semibold text-gray-700">Harga/Bulan</th>
-            <th className="px-4 py-3 text-right font-semibold text-gray-700">Harga/Tahun</th>
-            <th className="px-4 py-3 text-center font-semibold text-gray-700">Ukuran (sqft)</th>
-            <th className="px-4 py-3 text-center font-semibold text-gray-700">Furnitur</th>
-            <th className="px-4 py-3 text-center font-semibold text-gray-700">Link</th>
-          </tr>
-        </thead>
-        <tbody>
-          {properties.map((prop, idx) => (
-            <tr
-              key={idx}
-              className="border-b border-gray-100 hover:bg-blue-50 transition"
-            >
-              <td className="px-4 py-3 text-gray-700 max-w-xs truncate">{prop.title}</td>
-              <td className="px-4 py-3 text-gray-700 font-medium">{prop.propertyName}</td>
-              <td className="px-4 py-3 text-center text-gray-700">{prop.bedroom}</td>
-              <td className="px-4 py-3 text-right text-green-600 font-semibold">
-                {formatPrice(prop.priceMonthly)}
-              </td>
-              <td className="px-4 py-3 text-right text-blue-600 font-semibold">
-                {formatPrice(prop.priceYearly)}
-              </td>
-              <td className="px-4 py-3 text-center text-gray-700">
-                {prop.sizeSquft.toFixed(0)}
-              </td>
-              <td className="px-4 py-3 text-center">
-                <span className="inline-block px-2 py-1 bg-amber-100 text-amber-800 rounded text-xs font-semibold">
-                  {prop.furnitureStatus}
-                </span>
-              </td>
-              <td className="px-4 py-3 text-center">
-                <a
-                  href={prop.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-500 hover:text-blue-700 underline"
-                >
-                  🔗 View
-                </a>
-              </td>
+    <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm text-left">
+          <thead className="bg-gray-50 border-b border-gray-200 text-gray-600 font-semibold uppercase text-xs tracking-wider">
+            <tr>
+              <th className="px-6 py-5">Property Details</th>
+              <th className="px-6 py-5">Type</th>
+              <th className="px-6 py-5">Size</th>
+              <th className="px-6 py-5">Furnishing</th>
+              <th className="px-6 py-5 text-right">Price</th>
+              <th className="px-6 py-5 text-center">Action</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-      {properties.length === 0 && (
-        <div className="p-8 text-center text-gray-500">
-          Tidak ada data properti
-        </div>
-      )}
+          </thead>
+          <tbody className="divide-y divide-gray-100">
+            {properties.map((prop, idx) => (
+              <tr key={idx} className="hover:bg-yellow-50/50 transition duration-150">
+                <td className="px-6 py-5">
+                  <p className="font-bold text-sh-dark text-base mb-1">{prop.title}</p>
+                  <p className="text-gray-500 text-xs flex items-center gap-1">
+                    <span className="text-sh-yellow">📍</span> {prop.propertyName}
+                  </p>
+                </td>
+                <td className="px-6 py-5">
+                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-gray-100 text-sh-dark">
+                    {prop.bedroom}
+                  </span>
+                </td>
+                <td className="px-6 py-5 text-gray-600 font-medium">
+                  {prop.sizeSquft} sqft
+                </td>
+                <td className="px-6 py-5">
+                  <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold ${
+                    prop.furnitureStatus.includes('Fully')
+                      ? 'bg-sh-yellow/20 text-sh-dark'
+                      : 'bg-gray-100 text-gray-600'
+                  }`}>
+                    {prop.furnitureStatus}
+                  </span>
+                </td>
+                <td className="px-6 py-5 text-right">
+                  <p className="font-bold text-sh-dark text-lg">{formatPrice(prop.priceMonthly)}<span className="text-xs text-gray-400 font-normal">/mo</span></p>
+                  <p className="text-xs text-gray-400 font-medium">{formatPrice(prop.priceYearly)}/yr</p>
+                </td>
+                <td className="px-6 py-5 text-center">
+                  <a
+                    href={prop.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block px-5 py-2.5 bg-sh-yellow text-sh-dark font-bold text-sm rounded-xl hover:bg-yellow-400 hover:shadow-md transition"
+                  >
+                    View Unit
+                  </a>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

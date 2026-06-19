@@ -8,9 +8,15 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#3b82f6',
-        secondary: '#8b5cf6',
+        sh: {
+          yellow: '#F5D100', // Speedhome Signature Yellow
+          dark: '#2A2B2A',   // Speedhome Dark Text
+          gray: '#F7F7F7',   // Light gray background
+        }
       },
+      fontFamily: {
+        sans: ['var(--font-poppins)', 'sans-serif'],
+      }
     },
   },
   plugins: [],
