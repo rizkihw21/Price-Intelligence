@@ -17,12 +17,22 @@ export default function Home() {
   const [stats, setStats] = useState<any>(null);
   const [error, setError] = useState<any>(null);
 
+  // States for filters & sorting
+  const [sortBy, setSortBy] = useState<string>('default');
+  const [filterBedroom, setFilterBedroom] = useState<string>('all');
+  const [filterFurnishing, setFilterFurnishing] = useState<string>('all');
+
   const handleSearch = async (query: string) => {
     setLoading(true);
     setSearchQuery(query);
     setProperties([]);
     setStats(null);
     setError(null);
+    // Reset filters on new search
+    setSortBy('default');
+    setFilterBedroom('all');
+    setFilterFurnishing('all');
+
     try {
       const response = await axios.get(`/api/scrape?query=${encodeURIComponent(query)}`);
       const data = response.data.properties || [];
@@ -42,6 +52,26 @@ export default function Home() {
       setLoading(false);
     }
   };
+
+  // Filter and sort logic for presentation
+  const displayedProperties = properties
+    .filter((p) => {
+      const matchBedroom = filterBedroom === 'all' || p.bedroom === filterBedroom;
+      const matchFurnishing =
+        filterFurnishing === 'all' ||
+        p.furnitureStatus.toLowerCase().includes(filterFurnishing.toLowerCase());
+      return matchBedroom && matchFurnishing;
+    })
+    .sort((a, b) => {
+      if (sortBy === 'price-asc') return a.priceMonthly - b.priceMonthly;
+      if (sortBy === 'price-desc') return b.priceMonthly - a.priceMonthly;
+      return 0;
+    });
+
+  // Extract unique bedroom types for filter dropdown
+  const bedroomTypes = Array.from(new Set(properties.map(p => p.bedroom))).sort();
+  // Extract unique furnishing types for filter dropdown
+  const furnishingTypes = ['Fully Furnished', 'Partially Furnished', 'Unfurnished'];
 
   return (
     <main className="min-h-screen bg-[#F7F7F7] flex flex-col font-sans">
@@ -110,11 +140,13 @@ export default function Home() {
 
         {!loading && properties.length > 0 && stats && (
           <>
+            {/* Stats Cards */}
             <section className="space-y-4">
-              <div className="flex justify-between items-end flex-wrap gap-2">
+              <div className="flex justify-between items-end flex-wrap gap-4">
                 <h3 className="text-2xl font-bold text-sh-dark">
-                  📈 Market Summary: <span className="text-blue-600">{searchQuery}</span>
+                  📈 Market Summary: <span className="text-[#E6B800]">{searchQuery}</span>
                 </h3>
+                {/* Export Buttons */}
                 <div className="flex gap-2">
                   <button
                     onClick={() => exportToCSV(properties, searchQuery)}
@@ -140,14 +172,72 @@ export default function Home() {
               />
             </section>
 
+            {/* Visualisation Chart */}
             <section className="space-y-4">
               <h3 className="text-2xl font-bold text-sh-dark">📊 Market Trends</h3>
               <PriceChart data={stats.byBedroom} />
             </section>
 
-            <section className="space-y-4">
-              <h3 className="text-2xl font-bold text-sh-dark">📋 Unit Listings</h3>
-              <PropertyTable properties={properties} />
+            {/* Property Table with Filters */}
+            <section className="space-y-6">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                  <h3 className="text-2xl font-bold text-sh-dark">📋 Unit Listings</h3>
+                  <p className="text-gray-500 text-sm mt-1">
+                    Showing {displayedProperties.length} of {properties.length} properties
+                  </p>
+                </div>
+
+                {/* Filter Controls */}
+                <div className="flex flex-wrap gap-2">
+                  {/* Sort Select */}
+                  <div className="flex flex-col">
+                    <label className="text-xs font-bold text-gray-500 mb-1 uppercase">Sort By Price</label>
+                    <select
+                      value={sortBy}
+                      onChange={(e) => setSortBy(e.target.value)}
+                      className="px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm font-semibold text-sh-dark focus:outline-none focus:border-sh-yellow"
+                    >
+                      <option value="default">Default</option>
+                      <option value="price-asc">Price: Low to High</option>
+                      <option value="price-desc">Price: High to Low</option>
+                    </select>
+                  </div>
+
+                  {/* Bedroom Filter */}
+                  <div className="flex flex-col">
+                    <label className="text-xs font-bold text-gray-500 mb-1 uppercase">Room Type</label>
+                    <select
+                      value={filterBedroom}
+                      onChange={(e) => setFilterBedroom(e.target.value)}
+                      className="px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm font-semibold text-sh-dark focus:outline-none focus:border-sh-yellow"
+                    >
+                      <option value="all">All Rooms</option>
+                      {bedroomTypes.map((type) => (
+                        <option key={type} value={type}>{type}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* Furnishing Filter */}
+                  <div className="flex flex-col">
+                    <label className="text-xs font-bold text-gray-500 mb-1 uppercase">Furnishing</label>
+                    <select
+                      value={filterFurnishing}
+                      onChange={(e) => setFilterFurnishing(e.target.value)}
+                      className="px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm font-semibold text-sh-dark focus:outline-none focus:border-sh-yellow"
+                    >
+                      <option value="all">All Furnishings</option>
+                      {furnishingTypes.map((type) => (
+                        <option key={type} value={type}>{type}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              {/* Listings Table */}
+              <PropertyTable properties={displayedProperties} />
             </section>
           </>
         )}
