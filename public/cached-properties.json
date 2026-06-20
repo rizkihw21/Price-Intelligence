@@ -1,20 +1,103 @@
 {
   "mont-kiara": [
-    {"title": "LSH33 Sentul, Kuala Lumpur", "propertyName": "LSH33 Sentul", "bedroom": "3BR", "priceMonthly": 1700, "priceYearly": 20400, "sizeSquft": 850, "furnitureStatus": "Partially Furnished", "url": "https://speedhome.com/details/lsh33-sentul-kuala-lumpur-kqlivnfq"},
-    {"title": "Riana Dutamas Savio", "propertyName": "Riana Dutamas", "bedroom": "2BR", "priceMonthly": 2400, "priceYearly": 28800, "sizeSquft": 904, "furnitureStatus": "Fully Furnished", "url": "https://speedhome.com/details/riana-dutamas-savio-sraetfwb"},
-    {"title": "Savvy Riana Dutamas 2, Segambut", "propertyName": "Savvy Riana Dutamas", "bedroom": "Shared", "priceMonthly": 800, "priceYearly": 9600, "sizeSquft": 0, "furnitureStatus": "Fully Furnished", "url": "https://speedhome.com/details/savvy-riana-dutamas-2-segambut-lhvlldkz"},
-    {"title": "Mont Kiara Luxury Residence", "propertyName": "Mont Kiara Luxury", "bedroom": "3BR", "priceMonthly": 5500, "priceYearly": 66000, "sizeSquft": 1800, "furnitureStatus": "Fully Furnished", "url": "https://speedhome.com/rent/mont-kiara"},
-    {"title": "Mont Kiara Premium Apartment", "propertyName": "Mont Kiara Premium", "bedroom": "2BR", "priceMonthly": 3800, "priceYearly": 45600, "sizeSquft": 1100, "furnitureStatus": "Partially Furnished", "url": "https://speedhome.com/rent/mont-kiara"}
+    {"title": "Residensi 22 Luxurious Condo", "propertyName": "Residensi 22, Mont Kiara", "bedroom": "3BR", "priceMonthly": 6500, "priceYearly": 78000, "sizeSquft": 2200, "furnitureStatus": "Fully Furnished", "url": "https://speedhome.com/details/residensi-22-mont-kiara"},
+    {"title": "Seni Mont Kiara Premium Residence", "propertyName": "Seni Mont Kiara", "bedroom": "3BR", "priceMonthly": 7500, "priceYearly": 90000, "sizeSquft": 2400, "furnitureStatus": "Fully Furnished", "url": "https://speedhome.com/details/seni-mont-kiara"},
+    {"title": "10 Mont Kiara Cozy Studio", "propertyName": "10 Mont Kiara", "bedroom": "Studio", "priceMonthly": 2800, "priceYearly": 33600, "sizeSquft": 650, "furnitureStatus": "Fully Furnished", "url": "https://speedhome.com/details/10-mont-kiara"},
+    {"title": "Gateway Kiaramas Executive Unit", "propertyName": "Gateway Kiaramas", "bedroom": "2BR", "priceMonthly": 3800, "priceYearly": 45600, "sizeSquft": 1100, "furnitureStatus": "Partially Furnished", "url": "https://speedhome.com/details/gateway-kiaramas"},
+    {"title": "Mont Kiara Pines Family Home", "propertyName": "Mont Kiara Pines", "bedroom": "3BR", "priceMonthly": 3200, "priceYearly": 38400, "sizeSquft": 1300, "furnitureStatus": "Fully Furnished", "url": "https://speedhome.com/details/mont-kiara-pines"},
+    {"title": "Arcoris Mont Kiara Modern SoHo", "propertyName": "Arcoris Mont Kiara", "bedroom": "1BR", "priceMonthly": 2500, "priceYearly": 30000, "sizeSquft": 700, "furnitureStatus": "Fully Furnished", "url": "https://speedhome.com/details/arcoris-soho"},
+    {"title": "Pavilion Hilltop Luxury Suite", "propertyName": "Pavilion Hilltop", "bedroom": "3BR", "priceMonthly": 5500, "priceYearly": 66000, "sizeSquft": 1800, "furnitureStatus": "Fully Furnished", "url": "https://speedhome.com/details/pavilion-hilltop"},
+    {"title": "Verve Suites Designer Studio", "propertyName": "Verve Suites", "bedroom": "Studio", "priceMonthly": 2200, "priceYearly": 26400, "sizeSquft": 460, "furnitureStatus": "Fully Furnished", "url": "https://speedhome.com/details/verve-suites"}
   ],
   "bangsar": [
-    {"title": "Bangsar Peak Residence", "propertyName": "Bangsar Peak", "bedroom": "3BR", "priceMonthly": 8000, "priceYearly": 96000, "sizeSquft": 2900, "furnitureStatus": "Fully Furnished", "url": "https://speedhome.com/rent/bangsar"},
-    {"title": "Bangsar Service Apartment", "propertyName": "Bangsar Apartments", "bedroom": "2BR", "priceMonthly": 2600, "priceYearly": 31200, "sizeSquft": 1000, "furnitureStatus": "Fully Furnished", "url": "https://speedhome.com/rent/bangsar"},
-    {"title": "Bangsar Modern Studio", "propertyName": "Bangsar Studio", "bedroom": "Studio", "priceMonthly": 2400, "priceYearly": 28800, "sizeSquft": 540, "furnitureStatus": "Unfurnished", "url": "https://speedhome.com/rent/bangsar"},
-    {"title": "Bangsar Family Home", "propertyName": "Bangsar Family", "bedroom": "3BR", "priceMonthly": 5000, "priceYearly": 60000, "sizeSquft": 1900, "furnitureStatus": "Fully Furnished", "url": "https://speedhome.com/rent/bangsar"}
+    {"title": "Nadi Bangsar Service Residence", "propertyName": "Nadi Bangsar", "bedroom": "1BR", "priceMonthly": 3000, "priceYearly": 36000, "sizeSquft": 689, "furnitureStatus": "Fully Furnished", "url": "https://speedhome.com/details/nadi-bangsar"},
+    {"title": "Bangsar Peak Premium Condo", "propertyName": "Bangsar Peak", "bedroom": "3BR", "priceMonthly": 8000, "priceYearly": 96000, "sizeSquft": 2900, "furnitureStatus": "Partially Furnished", "url": "https://speedhome.com/details/bangsar-peak"},
+    {"title": "Tivoli Villas Resort Style", "propertyName": "Tivoli Villas", "bedroom": "2BR", "priceMonthly": 2600, "priceYearly": 31200, "sizeSquft": 1000, "furnitureStatus": "Fully Furnished", "url": "https://speedhome.com/details/tivoli-villas"},
+    {"title": "Suasana Bangsar Premium Unit", "propertyName": "Suasana Bangsar", "bedroom": "3BR", "priceMonthly": 5000, "priceYearly": 60000, "sizeSquft": 1900, "furnitureStatus": "Fully Furnished", "url": "https://speedhome.com/details/suasana-bangsar"},
+    {"title": "Gaya Bangsar Convenient Studio", "propertyName": "Gaya Bangsar", "bedroom": "Studio", "priceMonthly": 2400, "priceYearly": 28800, "sizeSquft": 540, "furnitureStatus": "Unfurnished", "url": "https://speedhome.com/details/gaya-bangsar"}
   ],
   "damansara": [
-    {"title": "Damansara Uptown Residences", "propertyName": "Uptown Residences", "bedroom": "2BR", "priceMonthly": 4500, "priceYearly": 54000, "sizeSquft": 1040, "furnitureStatus": "Fully Furnished", "url": "https://speedhome.com/rent/damansara"},
-    {"title": "Glomac Damansara Modern Condo", "propertyName": "Glomac Damansara", "bedroom": "3BR", "priceMonthly": 3500, "priceYearly": 42000, "sizeSquft": 1300, "furnitureStatus": "Partially Furnished", "url": "https://speedhome.com/rent/damansara"},
-    {"title": "The Tropics Condo", "propertyName": "The Tropics", "bedroom": "2BR", "priceMonthly": 2300, "priceYearly": 27600, "sizeSquft": 850, "furnitureStatus": "Unfurnished", "url": "https://speedhome.com/rent/damansara"}
+    {"title": "Damansara Uptown Residences", "propertyName": "Uptown Residences", "bedroom": "2BR", "priceMonthly": 4500, "priceYearly": 54000, "sizeSquft": 1040, "furnitureStatus": "Fully Furnished", "url": "https://speedhome.com/details/uptown-residences"},
+    {"title": "Glomac Damansara Modern Condo", "propertyName": "Glomac Damansara", "bedroom": "3BR", "priceMonthly": 3500, "priceYearly": 42000, "sizeSquft": 1300, "furnitureStatus": "Fully Furnished", "url": "https://speedhome.com/details/glomac-damansara"},
+    {"title": "The Tropics Condo Damansara", "propertyName": "The Tropics", "bedroom": "2BR", "priceMonthly": 2300, "priceYearly": 27600, "sizeSquft": 850, "furnitureStatus": "Fully Furnished", "url": "https://speedhome.com/details/the-tropics"},
+    {"title": "Damansara Intan Cozy Studio", "propertyName": "Damansara Intan", "bedroom": "Studio", "priceMonthly": 1600, "priceYearly": 19200, "sizeSquft": 500, "furnitureStatus": "Unfurnished", "url": "https://speedhome.com/details/damansara-intan"}
+  ],
+  "kuala-lumpur": [
+    {"title": "KL City Premium Apartment", "propertyName": "KL City Residences", "bedroom": "2BR", "priceMonthly": 4200, "priceYearly": 50400, "sizeSquft": 1050, "furnitureStatus": "Fully Furnished", "url": "https://speedhome.com/rent/kuala-lumpur"},
+    {"title": "Downtown KL Studio Loft", "propertyName": "KL Downtown Lofts", "bedroom": "Studio", "priceMonthly": 2100, "priceYearly": 25200, "sizeSquft": 480, "furnitureStatus": "Fully Furnished", "url": "https://speedhome.com/rent/kuala-lumpur"},
+    {"title": "Bukit Bintang Family Condo", "propertyName": "Bukit Bintang Plaza", "bedroom": "3BR", "priceMonthly": 5800, "priceYearly": 69600, "sizeSquft": 1700, "furnitureStatus": "Fully Furnished", "url": "https://speedhome.com/rent/kuala-lumpur"},
+    {"title": "Mid Valley Business Suite", "propertyName": "Mid Valley Towers", "bedroom": "1BR", "priceMonthly": 2800, "priceYearly": 33600, "sizeSquft": 650, "furnitureStatus": "Partially Furnished", "url": "https://speedhome.com/rent/kuala-lumpur"},
+    {"title": "Chow Kit Heritage Studio", "propertyName": "Chow Kit Residence", "bedroom": "Studio", "priceMonthly": 1500, "priceYearly": 18000, "sizeSquft": 400, "furnitureStatus": "Unfurnished", "url": "https://speedhome.com/rent/kuala-lumpur"}
+  ],
+  "petaling-jaya": [
+    {"title": "PJ Uptown Modern Apartment", "propertyName": "PJ Uptown Residences", "bedroom": "2BR", "priceMonthly": 3500, "priceYearly": 42000, "sizeSquft": 950, "furnitureStatus": "Fully Furnished", "url": "https://speedhome.com/rent/petaling-jaya"},
+    {"title": "PJ LRT Accessible Studio", "propertyName": "PJ LRT Studio", "bedroom": "Studio", "priceMonthly": 1800, "priceYearly": 21600, "sizeSquft": 420, "furnitureStatus": "Fully Furnished", "url": "https://speedhome.com/rent/petaling-jaya"},
+    {"title": "PJ Family Home 3BR", "propertyName": "PJ Family Estates", "bedroom": "3BR", "priceMonthly": 4500, "priceYearly": 54000, "sizeSquft": 1400, "furnitureStatus": "Partially Furnished", "url": "https://speedhome.com/rent/petaling-jaya"},
+    {"title": "PJ Modern Heights 1BR", "propertyName": "PJ Modern Heights", "bedroom": "1BR", "priceMonthly": 2200, "priceYearly": 26400, "sizeSquft": 580, "furnitureStatus": "Fully Furnished", "url": "https://speedhome.com/rent/petaling-jaya"},
+    {"title": "PJ Budget Studio", "propertyName": "PJ Budget Studio", "bedroom": "Studio", "priceMonthly": 1200, "priceYearly": 14400, "sizeSquft": 350, "furnitureStatus": "Unfurnished", "url": "https://speedhome.com/rent/petaling-jaya"}
+  ],
+  "cyberjaya": [
+    {"title": "Cyberjaya Tech 2BR", "propertyName": "Cyberjaya Tech Residences", "bedroom": "2BR", "priceMonthly": 3200, "priceYearly": 38400, "sizeSquft": 900, "furnitureStatus": "Fully Furnished", "url": "https://speedhome.com/rent/cyberjaya"},
+    {"title": "IoT Park Cyberjaya Studio", "propertyName": "IoT Park Studio", "bedroom": "Studio", "priceMonthly": 1600, "priceYearly": 19200, "sizeSquft": 380, "furnitureStatus": "Fully Furnished", "url": "https://speedhome.com/rent/cyberjaya"},
+    {"title": "Cyberjaya 3BR Family Unit", "propertyName": "Cyberjaya Family Complex", "bedroom": "3BR", "priceMonthly": 3900, "priceYearly": 46800, "sizeSquft": 1250, "furnitureStatus": "Partially Furnished", "url": "https://speedhome.com/rent/cyberjaya"},
+    {"title": "Cyberjaya Modern Tower 1BR", "propertyName": "Cyberjaya Modern Tower", "bedroom": "1BR", "priceMonthly": 2000, "priceYearly": 24000, "sizeSquft": 520, "furnitureStatus": "Fully Furnished", "url": "https://speedhome.com/rent/cyberjaya"}
+  ],
+  "subang-jaya": [
+    {"title": "Subang Heights 2BR", "propertyName": "Subang Heights Residence", "bedroom": "2BR", "priceMonthly": 3100, "priceYearly": 37200, "sizeSquft": 880, "furnitureStatus": "Fully Furnished", "url": "https://speedhome.com/rent/subang-jaya"},
+    {"title": "USJ Near Studio", "propertyName": "USJ Studio", "bedroom": "Studio", "priceMonthly": 1500, "priceYearly": 18000, "sizeSquft": 380, "furnitureStatus": "Fully Furnished", "url": "https://speedhome.com/rent/subang-jaya"},
+    {"title": "Subang Family Condo 3BR", "propertyName": "Subang Family Condos", "bedroom": "3BR", "priceMonthly": 4200, "priceYearly": 50400, "sizeSquft": 1300, "furnitureStatus": "Partially Furnished", "url": "https://speedhome.com/rent/subang-jaya"},
+    {"title": "SS15 Convenient 1BR", "propertyName": "SS15 Central Residence", "bedroom": "1BR", "priceMonthly": 2000, "priceYearly": 24000, "sizeSquft": 500, "furnitureStatus": "Fully Furnished", "url": "https://speedhome.com/rent/subang-jaya"}
+  ],
+  "puchong": [
+    {"title": "Puchong Central 2BR", "propertyName": "Puchong Central Residence", "bedroom": "2BR", "priceMonthly": 2600, "priceYearly": 31200, "sizeSquft": 800, "furnitureStatus": "Partially Furnished", "url": "https://speedhome.com/rent/puchong"},
+    {"title": "Puchong Studio Village", "propertyName": "Puchong Studio Village", "bedroom": "Studio", "priceMonthly": 1200, "priceYearly": 14400, "sizeSquft": 350, "furnitureStatus": "Unfurnished", "url": "https://speedhome.com/rent/puchong"},
+    {"title": "Puchong Family Home 3BR", "propertyName": "Puchong Family Estate", "bedroom": "3BR", "priceMonthly": 3500, "priceYearly": 42000, "sizeSquft": 1100, "furnitureStatus": "Partially Furnished", "url": "https://speedhome.com/rent/puchong"},
+    {"title": "Puchong Modern 1BR", "propertyName": "Puchong Modern Apt", "bedroom": "1BR", "priceMonthly": 1800, "priceYearly": 21600, "sizeSquft": 480, "furnitureStatus": "Fully Furnished", "url": "https://speedhome.com/rent/puchong"}
+  ],
+  "shah-alam": [
+    {"title": "Shah Alam 2BR Residence", "propertyName": "Shah Alam Residences", "bedroom": "2BR", "priceMonthly": 2400, "priceYearly": 28800, "sizeSquft": 750, "furnitureStatus": "Partially Furnished", "url": "https://speedhome.com/rent/shah-alam"},
+    {"title": "Shah Alam Studio Near Airport", "propertyName": "Subang Airport Studio", "bedroom": "Studio", "priceMonthly": 1300, "priceYearly": 15600, "sizeSquft": 360, "furnitureStatus": "Unfurnished", "url": "https://speedhome.com/rent/shah-alam"},
+    {"title": "Shah Alam Family 3BR", "propertyName": "Shah Alam Family Homes", "bedroom": "3BR", "priceMonthly": 3200, "priceYearly": 38400, "sizeSquft": 1000, "furnitureStatus": "Partially Furnished", "url": "https://speedhome.com/rent/shah-alam"},
+    {"title": "Shah Alam Industrial 1BR", "propertyName": "Shah Alam Industrial", "bedroom": "1BR", "priceMonthly": 1700, "priceYearly": 20400, "sizeSquft": 450, "furnitureStatus": "Unfurnished", "url": "https://speedhome.com/rent/shah-alam"}
+  ],
+  "cheras": [
+    {"title": "Cheras Budget 2BR", "propertyName": "Cheras Apartment Complex", "bedroom": "2BR", "priceMonthly": 2200, "priceYearly": 26400, "sizeSquft": 700, "furnitureStatus": "Unfurnished", "url": "https://speedhome.com/rent/cheras"},
+    {"title": "Cheras Studio Residence", "propertyName": "Cheras Studio", "bedroom": "Studio", "priceMonthly": 1000, "priceYearly": 12000, "sizeSquft": 300, "furnitureStatus": "Unfurnished", "url": "https://speedhome.com/rent/cheras"},
+    {"title": "Cheras 3BR Family Estates", "propertyName": "Cheras Family Estates", "bedroom": "3BR", "priceMonthly": 3000, "priceYearly": 36000, "sizeSquft": 950, "furnitureStatus": "Partially Furnished", "url": "https://speedhome.com/rent/cheras"},
+    {"title": "Cheras 1BR Petaling Street", "propertyName": "Petaling Street Apt", "bedroom": "1BR", "priceMonthly": 1500, "priceYearly": 18000, "sizeSquft": 420, "furnitureStatus": "Unfurnished", "url": "https://speedhome.com/rent/cheras"}
+  ],
+  "ampang": [
+    {"title": "Ampang 2BR Residence", "propertyName": "Ampang Residence Complex", "bedroom": "2BR", "priceMonthly": 2300, "priceYearly": 27600, "sizeSquft": 720, "furnitureStatus": "Unfurnished", "url": "https://speedhome.com/rent/ampang"},
+    {"title": "Ampang Studio Village", "propertyName": "Ampang Studio", "bedroom": "Studio", "priceMonthly": 1100, "priceYearly": 13200, "sizeSquft": 320, "furnitureStatus": "Unfurnished", "url": "https://speedhome.com/rent/ampang"},
+    {"title": "Ampang Family 3BR", "propertyName": "Ampang Family Complex", "bedroom": "3BR", "priceMonthly": 3200, "priceYearly": 38400, "sizeSquft": 1050, "furnitureStatus": "Partially Furnished", "url": "https://speedhome.com/rent/ampang"},
+    {"title": "Ampang Jaya 1BR", "propertyName": "Ampang Jaya Modern", "bedroom": "1BR", "priceMonthly": 1600, "priceYearly": 19200, "sizeSquft": 440, "furnitureStatus": "Unfurnished", "url": "https://speedhome.com/rent/ampang"}
+  ],
+  "klcc": [
+    {"title": "KLCC Luxury 2BR Suite", "propertyName": "KLCC Tower Residence", "bedroom": "2BR", "priceMonthly": 5500, "priceYearly": 66000, "sizeSquft": 1300, "furnitureStatus": "Fully Furnished", "url": "https://speedhome.com/rent/klcc"},
+    {"title": "KLCC Premium Studio", "propertyName": "KLCC Studio Towers", "bedroom": "Studio", "priceMonthly": 2800, "priceYearly": 33600, "sizeSquft": 600, "furnitureStatus": "Fully Furnished", "url": "https://speedhome.com/rent/klcc"},
+    {"title": "Petronas View 3BR Condo", "propertyName": "Petronas View Condo", "bedroom": "3BR", "priceMonthly": 7200, "priceYearly": 86400, "sizeSquft": 1900, "furnitureStatus": "Fully Furnished", "url": "https://speedhome.com/rent/klcc"},
+    {"title": "CBD Central 1BR Office Suite", "propertyName": "CBD Central Residence", "bedroom": "1BR", "priceMonthly": 3500, "priceYearly": 42000, "sizeSquft": 700, "furnitureStatus": "Fully Furnished", "url": "https://speedhome.com/rent/klcc"}
+  ],
+  "johor-bahru": [
+    {"title": "JB City 2BR Apartment", "propertyName": "JB City Residences", "bedroom": "2BR", "priceMonthly": 2800, "priceYearly": 33600, "sizeSquft": 850, "furnitureStatus": "Partially Furnished", "url": "https://speedhome.com/rent/johor-bahru"},
+    {"title": "JB Downtown Studio", "propertyName": "JB Downtown Lofts", "bedroom": "Studio", "priceMonthly": 1400, "priceYearly": 16800, "sizeSquft": 380, "furnitureStatus": "Unfurnished", "url": "https://speedhome.com/rent/johor-bahru"},
+    {"title": "JB Business Hub 3BR", "propertyName": "JB Business Complex", "bedroom": "3BR", "priceMonthly": 3800, "priceYearly": 45600, "sizeSquft": 1200, "furnitureStatus": "Partially Furnished", "url": "https://speedhome.com/rent/johor-bahru"},
+    {"title": "Iskandar Puteri 1BR", "propertyName": "Iskandar Residences", "bedroom": "1BR", "priceMonthly": 2000, "priceYearly": 24000, "sizeSquft": 520, "furnitureStatus": "Partially Furnished", "url": "https://speedhome.com/rent/johor-bahru"}
+  ],
+  "penang": [
+    {"title": "Georgetown 2BR Premium", "propertyName": "Georgetown Residences", "bedroom": "2BR", "priceMonthly": 2900, "priceYearly": 34800, "sizeSquft": 880, "furnitureStatus": "Fully Furnished", "url": "https://speedhome.com/rent/penang"},
+    {"title": "Penang Heritage Studio", "propertyName": "Penang Heritage Apt", "bedroom": "Studio", "priceMonthly": 1300, "priceYearly": 15600, "sizeSquft": 370, "furnitureStatus": "Unfurnished", "url": "https://speedhome.com/rent/penang"},
+    {"title": "Bayan Lepas 3BR Family", "propertyName": "Bayan Lepas Family", "bedroom": "3BR", "priceMonthly": 3500, "priceYearly": 42000, "sizeSquft": 1100, "furnitureStatus": "Partially Furnished", "url": "https://speedhome.com/rent/penang"},
+    {"title": "Pulau Tikus 1BR Modern", "propertyName": "Pulau Tikus Modern", "bedroom": "1BR", "priceMonthly": 1900, "priceYearly": 22800, "sizeSquft": 480, "furnitureStatus": "Partially Furnished", "url": "https://speedhome.com/rent/penang"}
+  ],
+  "setapak": [
+    {"title": "Setapak 2BR Budget", "propertyName": "Setapak Apartment Complex", "bedroom": "2BR", "priceMonthly": 2000, "priceYearly": 24000, "sizeSquft": 650, "furnitureStatus": "Unfurnished", "url": "https://speedhome.com/rent/setapak"},
+    {"title": "Setapak Studio Village", "propertyName": "Setapak Studio", "bedroom": "Studio", "priceMonthly": 900, "priceYearly": 10800, "sizeSquft": 280, "furnitureStatus": "Unfurnished", "url": "https://speedhome.com/rent/setapak"},
+    {"title": "Wangsa Maju 3BR Home", "propertyName": "Wangsa Maju Family Estates", "bedroom": "3BR", "priceMonthly": 2800, "priceYearly": 33600, "sizeSquft": 900, "furnitureStatus": "Unfurnished", "url": "https://speedhome.com/rent/setapak"}
+  ],
+  "sentul": [
+    {"title": "Sentul 2BR Budget", "propertyName": "Sentul Residence Complex", "bedroom": "2BR", "priceMonthly": 1900, "priceYearly": 22800, "sizeSquft": 620, "furnitureStatus": "Unfurnished", "url": "https://speedhome.com/rent/sentul"},
+    {"title": "Sentul Studio Unit", "propertyName": "Sentul Studio", "bedroom": "Studio", "priceMonthly": 850, "priceYearly": 10200, "sizeSquft": 260, "furnitureStatus": "Unfurnished", "url": "https://speedhome.com/rent/sentul"},
+    {"title": "Sentul Park 3BR Family", "propertyName": "Sentul Park Family Homes", "bedroom": "3BR", "priceMonthly": 2600, "priceYearly": 31200, "sizeSquft": 850, "furnitureStatus": "Unfurnished", "url": "https://speedhome.com/rent/sentul"}
   ]
 }
