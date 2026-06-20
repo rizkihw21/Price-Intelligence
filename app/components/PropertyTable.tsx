@@ -4,6 +4,7 @@ interface Property {
   title: string;
   propertyName: string;
   bedroom: string;
+  priceDaily?: number;
   priceMonthly: number;
   priceYearly: number;
   sizeSquft: number;
@@ -56,6 +57,9 @@ export default function PropertyTable({ properties }: { properties: Property[] }
                   </span>
                 </td>
                 <td className="px-6 py-5 text-right">
+                  {prop.priceDaily && (
+                    <p className="text-xs text-gray-400 font-medium">{formatPrice(prop.priceDaily)}/day</p>
+                  )}
                   <p className="font-bold text-sh-dark text-lg">{formatPrice(prop.priceMonthly)}<span className="text-xs text-gray-400 font-normal">/mo</span></p>
                   <p className="text-xs text-gray-400 font-medium">{formatPrice(prop.priceYearly)}/yr</p>
                 </td>

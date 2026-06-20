@@ -2,6 +2,7 @@ export interface Property {
   title: string;
   propertyName: string;
   bedroom: string;
+  priceDaily?: number; // Optional daily rate
   priceMonthly: number;
   priceYearly: number;
   sizeSquft: number;
@@ -15,6 +16,8 @@ export function calculateStatistics(properties: Property[]) {
       totalUnits: 0,
       averagePrice: 0,
       medianPrice: 0,
+      modesPrice: [],
+      fairPrice: 0,
       minPrice: 0,
       maxPrice: 0,
       averageSize: 0,
@@ -41,6 +44,22 @@ export function calculateStatistics(properties: Property[]) {
   // Average Size
   const avgSize = sizes.length > 0 ? sizes.reduce((a, b) => a + b, 0) / sizes.length : 0;
 
+  // Modus (harga yang paling sering muncul)
+  const priceFrequency: Record<number, number> = {};
+  prices.forEach((price) => {
+    priceFrequency[price] = (priceFrequency[price] || 0) + 1;
+  });
+
+  const maxFrequency = Math.max(...Object.values(priceFrequency));
+  const modesPrice = Object.entries(priceFrequency)
+    .filter(([_, freq]) => freq === maxFrequency)
+    .map(([price]) => parseInt(price, 10))
+    .sort((a, b) => a - b);
+
+  // Fair Price: representatif harga tengah (kombinasi median + average)
+  // Formula: (Median + Average) / 2 untuk hasil yang lebih balanced
+  const fairPrice = Math.round((median + average) / 2);
+
   // Group by bedroom
   const byBedroom = properties.reduce(
     (acc, prop) => {
@@ -63,11 +82,13 @@ export function calculateStatistics(properties: Property[]) {
 
   return {
     totalUnits: properties.length,
-    averagePrice: average,
-    medianPrice: median,
+    averagePrice: Math.round(average),
+    medianPrice: Math.round(median),
+    modesPrice, // Array of most frequent prices
+    fairPrice, // Representatif middle price
     minPrice: min,
     maxPrice: max,
-    averageSize: avgSize,
+    averageSize: Math.round(avgSize),
     byBedroom,
   };
 }

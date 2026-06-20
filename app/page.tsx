@@ -8,7 +8,7 @@ import PropertyTable from './components/PropertyTable';
 import LoadingSkeleton from './components/LoadingSkeleton';
 import PriceChart from './components/PriceChart';
 import { calculateStatistics, Property } from './lib/statistics';
-import { exportToCSV, exportToJSON } from './lib/export';
+import { exportToCSV, exportToJSON, exportToExcel } from './lib/export';
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -149,6 +149,12 @@ export default function Home() {
                 {/* Export Buttons */}
                 <div className="flex gap-2">
                   <button
+                    onClick={() => exportToExcel(properties, stats, searchQuery)}
+                    className="px-5 py-2.5 bg-blue-600 text-white font-bold text-sm rounded-xl hover:bg-blue-700 hover:shadow-md transition duration-200"
+                  >
+                    Download Excel
+                  </button>
+                  <button
                     onClick={() => exportToCSV(properties, searchQuery)}
                     className="px-5 py-2.5 bg-green-600 text-white font-bold text-sm rounded-xl hover:bg-green-700 hover:shadow-md transition duration-200"
                   >
@@ -165,6 +171,8 @@ export default function Home() {
               <PriceSummaryCard
                 averagePrice={stats.averagePrice}
                 medianPrice={stats.medianPrice}
+                modesPrice={stats.modesPrice}
+                fairPrice={stats.fairPrice}
                 minPrice={stats.minPrice}
                 maxPrice={stats.maxPrice}
                 totalUnits={stats.totalUnits}
