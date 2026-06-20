@@ -1,6 +1,20 @@
 import { NextResponse } from 'next/server';
+import { readFileSync } from 'fs';
+import { join } from 'path';
 import { scrapeSpeedhome, closeBrowser } from '../../lib/scraper';
 import { Property } from '../../lib/statistics';
+
+// Load cached data at request time
+function getCachedData() {
+  try {
+    const cachedPath = join(process.cwd(), 'public', 'cached-properties.json');
+    const data = readFileSync(cachedPath, 'utf-8');
+    return JSON.parse(data);
+  } catch (error) {
+    console.error('Error loading cached data:', error);
+    return {};
+  }
+}
 
 // Daftar area/kota valid yang didukung SPEEDHOME di Malaysia
 const AVAILABLE_CITIES = [
@@ -51,43 +65,56 @@ export async function GET(request: Request) {
   }
 
   let properties: Property[] = [];
+  let dataSource = 'REAL'; // Track data source
 
   try {
-    // 🔥 REAL WEB SCRAPING dari SPEEDHOME.com
-    console.log(`🔍 Scraping real data from SPEEDHOME.com for: ${availableCity.name}`);
+    // 🔥 TRY REAL WEB SCRAPING dari SPEEDHOME.com
+    console.log(`🔍 Attempting real scraping for: ${availableCity.name}`);
     properties = await scrapeSpeedhome(availableCity.slug);
+    dataSource = 'REAL';
+  } catch (scrapingError) {
+    // FALLBACK: Use cached data
+    console.log(`⚠️ Real scraping failed, using cached data: ${scrapingError instanceof Error ? scrapingError.message : 'Unknown error'}`);
 
-    if (properties.length === 0) {
+    const cachedData = getCachedData();
+    const cachedProperties = cachedData[availableCity.slug as keyof typeof cachedData];
+    if (cachedProperties && cachedProperties.length > 0) {
+      properties = cachedProperties as Property[];
+      dataSource = 'CACHED';
+      console.log(`✅ Using cached data: ${properties.length} properties from ${availableCity.name}`);
+    } else {
       return NextResponse.json(
         {
-          error: `No listings found for "${availableCity.name}"`,
-          message: 'The area exists but no properties were found. Try another area or check back later.',
+          error: `No data available for "${availableCity.name}"`,
+          message: 'Neither real-time scraping nor cached data is available.',
           availableCities: AVAILABLE_CITIES.slice(0, 10).map((c) => c.name),
         },
         { status: 404 }
       );
     }
+  }
 
-    return NextResponse.json({
-      query: availableCity.name,
-      areaSlug: availableCity.slug,
-      totalFound: properties.length,
-      properties,
-      timestamp: new Date().toISOString(),
-      source: 'REAL_SCRAPE_SPEEDHOME', // Indicate real scraping
-    });
-  } catch (error) {
-    console.error(`❌ Scraping error:`, error);
+  if (properties.length === 0) {
     return NextResponse.json(
       {
-        error: `Failed to fetch data from SPEEDHOME for "${availableCity.name}"`,
-        message: error instanceof Error ? error.message : 'Unknown error occurred',
+        error: `No listings found for "${availableCity.name}"`,
+        message: 'The area exists but no properties were found.',
+        availableCities: AVAILABLE_CITIES.slice(0, 10).map((c) => c.name),
       },
-      { status: 500 }
+      { status: 404 }
     );
-  } finally {
-    // Close browser di background (jangan block response)
-    // Biar dapat di-close, tapi ga block HTTP response
-    closeBrowser().catch(err => console.error('Error closing browser:', err));
   }
+
+  return NextResponse.json({
+    query: availableCity.name,
+    areaSlug: availableCity.slug,
+    totalFound: properties.length,
+    properties,
+    timestamp: new Date().toISOString(),
+    source: dataSource, // Show data source
+    note: dataSource === 'CACHED' ? 'Using cached data due to scraping limitations' : 'Real-time data from SPEEDHOME.com',
+  });
+
+  // Close browser in background (don't block response)
+  closeBrowser().catch(err => console.error('Error closing browser:', err));
 }

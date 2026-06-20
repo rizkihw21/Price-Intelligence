@@ -1,0 +1,20 @@
+{
+  "mont-kiara": [
+    {"title": "LSH33 Sentul, Kuala Lumpur", "propertyName": "LSH33 Sentul", "bedroom": "3BR", "priceMonthly": 1700, "priceYearly": 20400, "sizeSquft": 850, "furnitureStatus": "Partially Furnished", "url": "https://speedhome.com/details/lsh33-sentul-kuala-lumpur-kqlivnfq"},
+    {"title": "Riana Dutamas Savio", "propertyName": "Riana Dutamas", "bedroom": "2BR", "priceMonthly": 2400, "priceYearly": 28800, "sizeSquft": 904, "furnitureStatus": "Fully Furnished", "url": "https://speedhome.com/details/riana-dutamas-savio-sraetfwb"},
+    {"title": "Savvy Riana Dutamas 2, Segambut", "propertyName": "Savvy Riana Dutamas", "bedroom": "Shared", "priceMonthly": 800, "priceYearly": 9600, "sizeSquft": 0, "furnitureStatus": "Fully Furnished", "url": "https://speedhome.com/details/savvy-riana-dutamas-2-segambut-lhvlldkz"},
+    {"title": "Mont Kiara Luxury Residence", "propertyName": "Mont Kiara Luxury", "bedroom": "3BR", "priceMonthly": 5500, "priceYearly": 66000, "sizeSquft": 1800, "furnitureStatus": "Fully Furnished", "url": "https://speedhome.com/rent/mont-kiara"},
+    {"title": "Mont Kiara Premium Apartment", "propertyName": "Mont Kiara Premium", "bedroom": "2BR", "priceMonthly": 3800, "priceYearly": 45600, "sizeSquft": 1100, "furnitureStatus": "Partially Furnished", "url": "https://speedhome.com/rent/mont-kiara"}
+  ],
+  "bangsar": [
+    {"title": "Bangsar Peak Residence", "propertyName": "Bangsar Peak", "bedroom": "3BR", "priceMonthly": 8000, "priceYearly": 96000, "sizeSquft": 2900, "furnitureStatus": "Fully Furnished", "url": "https://speedhome.com/rent/bangsar"},
+    {"title": "Bangsar Service Apartment", "propertyName": "Bangsar Apartments", "bedroom": "2BR", "priceMonthly": 2600, "priceYearly": 31200, "sizeSquft": 1000, "furnitureStatus": "Fully Furnished", "url": "https://speedhome.com/rent/bangsar"},
+    {"title": "Bangsar Modern Studio", "propertyName": "Bangsar Studio", "bedroom": "Studio", "priceMonthly": 2400, "priceYearly": 28800, "sizeSquft": 540, "furnitureStatus": "Unfurnished", "url": "https://speedhome.com/rent/bangsar"},
+    {"title": "Bangsar Family Home", "propertyName": "Bangsar Family", "bedroom": "3BR", "priceMonthly": 5000, "priceYearly": 60000, "sizeSquft": 1900, "furnitureStatus": "Fully Furnished", "url": "https://speedhome.com/rent/bangsar"}
+  ],
+  "damansara": [
+    {"title": "Damansara Uptown Residences", "propertyName": "Uptown Residences", "bedroom": "2BR", "priceMonthly": 4500, "priceYearly": 54000, "sizeSquft": 1040, "furnitureStatus": "Fully Furnished", "url": "https://speedhome.com/rent/damansara"},
+    {"title": "Glomac Damansara Modern Condo", "propertyName": "Glomac Damansara", "bedroom": "3BR", "priceMonthly": 3500, "priceYearly": 42000, "sizeSquft": 1300, "furnitureStatus": "Partially Furnished", "url": "https://speedhome.com/rent/damansara"},
+    {"title": "The Tropics Condo", "propertyName": "The Tropics", "bedroom": "2BR", "priceMonthly": 2300, "priceYearly": 27600, "sizeSquft": 850, "furnitureStatus": "Unfurnished", "url": "https://speedhome.com/rent/damansara"}
+  ]
+}
