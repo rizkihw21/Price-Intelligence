@@ -63,48 +63,64 @@ export async function scrapeSpeedhome(areaSlug: string): Promise<Property[]> {
         const titleMatch = ariaLabel.match(/View details for (.+)/);
         const title = titleMatch ? titleMatch[1].trim() : '';
 
-        // Extract text content
+        // Extract text content & title
         const fullText = $card.text();
+
+        // Extract details from PropertyCard_propertyCardDetails class
+        const detailsText = $card.find('[class*="propertyCardDetails"]').text().trim();
+        const useDetails = detailsText || fullText;
 
         // Extract size (format: "850 sqft")
         const sizeMatch = fullText.match(/(\d+)\s*sqft/i);
         const sizeSquft = sizeMatch ? parseInt(sizeMatch[1], 10) : 0;
 
-        // Extract bedrooms (format: "3 2 1" = 3BR, 2 bathrooms, 1 kitchen)
-        // atau dalam text format seperti "3 Bedrooms"
-        const bedroomMatch = fullText.match(/(\d+)\s+(?:Bedroom|BR|bedroom|br|Bed)/i);
-        const bedroom = bedroomMatch ? `${bedroomMatch[1]}BR` : 'Unknown';
+        // Extract bedrooms from detail text pattern: "...sqft  3 2 1Amenities..."
+        // After "sqft", the numbers "X Y Z" = bedrooms, bathrooms, carparks
+        let bedroom = 'Unknown';
+        if (sizeMatch) {
+          const afterSqft = fullText.substring(fullText.indexOf(sizeMatch[0]) + sizeMatch[0].length).trim();
+          const bedMatch = afterSqft.match(/^\s*(\d+)\s+\d+\s+\d+/);
+          if (bedMatch) {
+            bedroom = `${bedMatch[1]}BR`;
+          }
+        }
+        // Fallback: check for patterns if no sqft found
+        if (bedroom === 'Unknown') {
+          if (fullText.toLowerCase().includes('shared') || fullText.includes('MEDIUM SHARED')) {
+            bedroom = 'Shared';
+          } else if (fullText.match(/\bstudio\b/i)) {
+            bedroom = 'Studio';
+          }
+        }
 
-        // Extract price (format: "RM 1,700 / month" atau "RM XXX / day")
+        // Extract price (format: "RM 1,700 / month")
         const priceMonthMatch = fullText.match(/RM\s*([\d,]+)\s*\/\s*month/i);
         const priceMonthly = priceMonthMatch
           ? parseInt(priceMonthMatch[1].replace(/,/g, ''), 10)
           : 0;
+        // Fallback: extract standalone RM number
+        const priceFallbackMatch = !priceMonthMatch ? fullText.match(/RM\s*([\d,]+)/) : null;
+        const priceMonthlyFallback = priceFallbackMatch
+          ? parseInt(priceFallbackMatch[1].replace(/,/g, ''), 10)
+          : 0;
+        const finalPriceMonthly = priceMonthly || priceMonthlyFallback;
 
-        // Extract daily price jika ada (format: "RM XXX / day")
-        const priceDayMatch = fullText.match(/RM\s*([\d,]+)\s*\/\s*day/i);
-        const priceDaily = priceDayMatch
-          ? parseInt(priceDayMatch[1].replace(/,/g, ''), 10)
-          : undefined;
+        // Daily price not available on SPEEDHOME listing cards
+        const priceDaily = undefined;
 
-        // Extract furnishing status (look for keywords)
-        let furnitureStatus = 'Unknown';
-        if (fullText.toLowerCase().includes('fully furnished')) {
-          furnitureStatus = 'Fully Furnished';
-        } else if (fullText.toLowerCase().includes('partially furnished')) {
-          furnitureStatus = 'Partially Furnished';
-        } else if (fullText.toLowerCase().includes('unfurnished')) {
-          furnitureStatus = 'Unfurnished';
-        }
+        // Furnishing status not available on SPEEDHOME listing cards
+        // Only available on detail page (/details/...)
+        const furnitureStatus = 'Not specified';
 
         // Only add jika ada minimum data (title & price)
-        if (title && priceMonthly > 0) {
+        if (title && finalPriceMonthly > 0) {
           properties.push({
             title,
             propertyName: title.split(',')[0]?.trim() || title,
             bedroom,
-            priceMonthly,
-            priceYearly: priceMonthly * 12,
+            priceMonthly: finalPriceMonthly,
+            priceYearly: finalPriceMonthly * 12,
+            priceDaily,
             sizeSquft,
             furnitureStatus,
             url: `https://speedhome.com${href}`,

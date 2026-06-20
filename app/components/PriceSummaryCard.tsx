@@ -9,10 +9,14 @@ interface PriceSummaryProps {
   maxPrice: number;
   totalUnits: number;
   averageSize: number;
+  hasDaily?: boolean;
+  hasMonthly?: boolean;
+  hasYearly?: boolean;
 }
 
 export default function PriceSummaryCard({
   averagePrice, medianPrice, modesPrice, fairPrice, minPrice, maxPrice, totalUnits, averageSize,
+  hasDaily = false, hasMonthly = true, hasYearly = true,
 }: PriceSummaryProps) {
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('ms-MY', {
@@ -37,9 +41,9 @@ export default function PriceSummaryCard({
 
   // Check availability of rental types
   const rentalTypes = [
-    { type: 'Daily (Harian)', available: false, note: 'Not Available on SPEEDHOME' },
-    { type: 'Monthly (Bulanan)', available: true, note: 'Available (Main focus)' },
-    { type: 'Yearly (Tahunan)', available: true, note: 'Available (Calculated)' }
+    { type: 'Daily (Harian)', available: hasDaily || false, note: hasDaily ? 'Available' : 'Not Available on SPEEDHOME' },
+    { type: 'Monthly (Bulanan)', available: hasMonthly !== false, note: 'Available' },
+    { type: 'Yearly (Tahunan)', available: hasYearly !== false, note: 'Available (Calculated from monthly)' }
   ];
 
   return (

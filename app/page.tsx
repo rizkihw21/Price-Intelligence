@@ -177,6 +177,9 @@ export default function Home() {
                 maxPrice={stats.maxPrice}
                 totalUnits={stats.totalUnits}
                 averageSize={stats.averageSize}
+                hasDaily={properties.some(p => p.priceDaily !== undefined)}
+                hasMonthly={true}
+                hasYearly={true}
               />
             </section>
 
