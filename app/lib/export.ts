@@ -3,13 +3,13 @@ import * as XLSX from 'xlsx';
 
 export function exportToCSV(properties: Property[], areaName: string) {
   const headers = [
-    'Judul',
-    'Properti',
-    'Kamar',
-    'Harga/Bulan (RM)',
-    'Harga/Tahun (RM)',
-    'Ukuran (sqft)',
-    'Furnitur',
+    'Title',
+    'Property',
+    'Bedroom',
+    'Price/Month (RM)',
+    'Price/Year (RM)',
+    'Size (sqft)',
+    'Furnishing',
     'Link',
   ];
 
@@ -100,7 +100,7 @@ export function exportToExcel(
 
   // Sheet 2: All Listings
   const listingsData = [
-    ['Judul', 'Properti', 'Kamar', 'Harga/Bulan (RM)', 'Harga/Tahun (RM)', 'Ukuran (sqft)', 'Furnitur', 'Link'],
+    ['Title', 'Property', 'Bedroom', 'Price/Month (RM)', 'Price/Year (RM)', 'Size (sqft)', 'Furnishing', 'Link'],
     ...properties.map((p) => [
       p.title,
       p.propertyName,

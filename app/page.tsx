@@ -281,7 +281,7 @@ export default function Home() {
             SPEED<span className="text-sh-yellow">HOME</span> Price Intelligence
           </p>
           <p className="text-xs text-gray-500 max-w-md mx-auto leading-relaxed">
-            This dashboard is an assessment project created for Jendela360. All property listing data is fetched dynamically from SPEEDHOME.com.
+            This dashboard is an assessment project. All property listing data is fetched dynamically from SPEEDHOME.com.
           </p>
           <div className="pt-4 border-t border-gray-800 text-xs text-gray-600">
             © 2026 SPEEDHOME Price Intelligence. All rights reserved.

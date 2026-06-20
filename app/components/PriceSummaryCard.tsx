@@ -41,9 +41,9 @@ export default function PriceSummaryCard({
 
   // Check availability of rental types
   const rentalTypes = [
-    { type: 'Daily (Harian)', available: hasDaily || false, note: hasDaily ? 'Available' : 'Not Available on SPEEDHOME' },
-    { type: 'Monthly (Bulanan)', available: hasMonthly !== false, note: 'Available' },
-    { type: 'Yearly (Tahunan)', available: hasYearly !== false, note: 'Available (Calculated from monthly)' }
+    { type: 'Daily', available: hasDaily || false, note: hasDaily ? 'Available' : 'Not Available' },
+    { type: 'Monthly', available: hasMonthly !== false, note: 'Available' },
+    { type: 'Yearly', available: hasYearly !== false, note: 'Available' }
   ];
 
   return (
@@ -59,7 +59,7 @@ export default function PriceSummaryCard({
             <div key={idx} className="flex items-center gap-2">
               <span className={`w-3 h-3 rounded-full ${t.available ? 'bg-green-500' : 'bg-red-500'}`}></span>
               <span className="text-sm font-semibold text-sh-dark">{t.type}:</span>
-              <span className="text-xs text-gray-500 font-medium">({t.note})</span>
+              <span className="text-xs text-gray-500 font-medium">{t.note}</span>
             </div>
           ))}
         </div>
@@ -68,12 +68,12 @@ export default function PriceSummaryCard({
       {/* Grid Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <Card title="Total Units Found" value={totalUnits} subtitle="Active Listings Scraped" />
-        <Card title="Average Price" value={formatPrice(averagePrice)} subtitle="Per Month Estimate" />
-        <Card title="Median Price" value={formatPrice(medianPrice)} subtitle="Per Month Estimate" />
+        <Card title="Average Price" value={formatPrice(averagePrice)} subtitle="Per Month" />
+        <Card title="Median Price" value={formatPrice(medianPrice)} subtitle="Per Month" />
         <Card title="Most Common Price" value={modesDisplay} subtitle="Mode (Most Frequent)" />
         <Card title="Fair Price" value={formatPrice(fairPrice)} subtitle="Recommended Baseline" />
         <Card title="Price Range" value={`${formatPrice(minPrice)} - ${formatPrice(maxPrice)}`} subtitle="Min to Max" />
-        <Card title="Average Size" value={`${averageSize.toFixed(0)} sqft`} subtitle="Estimated Area" />
+        <Card title="Average Size" value={`${averageSize.toFixed(0)} sqft`} subtitle="Average Area" />
       </div>
     </div>
   );

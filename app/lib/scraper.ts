@@ -14,6 +14,69 @@ async function getBrowser() {
   return browser;
 }
 
+async function scrapeFurnishingDetails(
+  page: any,
+  properties: Array<Property & { needsFurnishing: boolean }>
+): Promise<Property[]> {
+  console.log(`🔍 Scraping furnishing details for ${properties.length} properties...`);
+
+  const results: Property[] = [];
+
+  for (let i = 0; i < properties.length; i++) {
+    const prop = properties[i];
+    try {
+      // Navigate to detail page
+      await page.goto(prop.url, {
+        waitUntil: 'networkidle2',
+        timeout: 15000
+      });
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      // Get page content and parse
+      const html = await page.content();
+      const $ = cheerio.load(html);
+
+      // Extract furnishing dari amenities section (more specific than full page)
+      const amenitiesEl = $('[class*="amenities"]');
+      const amenitiesText = amenitiesEl.text() || '';
+
+      let furnitureStatus = 'Not specified';
+
+      // Check amenities section first (most accurate)
+      if (amenitiesText.match(/fully\s+furnished/i)) {
+        furnitureStatus = 'Fully Furnished';
+      } else if (amenitiesText.match(/partially\s+furnished/i)) {
+        furnitureStatus = 'Partially Furnished';
+      } else if (amenitiesText.match(/unfurnished/i)) {
+        furnitureStatus = 'Unfurnished';
+      } else {
+        // Fallback: check page title (e.g., "LSH33 Sentul KL | Studio Unfurnished #FQ")
+        const pageTitle = await page.title();
+        if (pageTitle.match(/unfurnished/i)) {
+          furnitureStatus = 'Unfurnished';
+        } else if (pageTitle.match(/furnished/i)) {
+          furnitureStatus = 'Fully Furnished';
+        }
+      }
+
+      results.push({
+        ...prop,
+        furnitureStatus,
+      });
+
+      console.log(`  ✓ ${i + 1}/${properties.length}: ${prop.propertyName} - ${furnitureStatus}`);
+    } catch (error) {
+      console.error(`  ✗ ${i + 1}/${properties.length}: Failed to scrape ${prop.propertyName}`);
+      results.push({
+        ...prop,
+        furnitureStatus: 'Not specified',
+      });
+    }
+  }
+
+  return results;
+}
+
 export async function scrapeSpeedhome(areaSlug: string): Promise<Property[]> {
   try {
     const browser = await getBrowser();
@@ -50,7 +113,9 @@ export async function scrapeSpeedhome(areaSlug: string): Promise<Property[]> {
 
     console.log(`Found ${listings.length} listings`);
 
-    // Extract data dari setiap listing
+    // Extract basic data dari setiap listing (tanpa furnishing dulu)
+    const basicProperties: Array<Property & { needsFurnishing: boolean }> = [];
+
     listings.each((index, element) => {
       try {
         const $card = $(element);
@@ -75,7 +140,6 @@ export async function scrapeSpeedhome(areaSlug: string): Promise<Property[]> {
         const sizeSquft = sizeMatch ? parseInt(sizeMatch[1], 10) : 0;
 
         // Extract bedrooms from detail text pattern: "...sqft  3 2 1Amenities..."
-        // After "sqft", the numbers "X Y Z" = bedrooms, bathrooms, carparks
         let bedroom = 'Unknown';
         if (sizeMatch) {
           const afterSqft = fullText.substring(fullText.indexOf(sizeMatch[0]) + sizeMatch[0].length).trim();
@@ -84,7 +148,6 @@ export async function scrapeSpeedhome(areaSlug: string): Promise<Property[]> {
             bedroom = `${bedMatch[1]}BR`;
           }
         }
-        // Fallback: check for patterns if no sqft found
         if (bedroom === 'Unknown') {
           if (fullText.toLowerCase().includes('shared') || fullText.includes('MEDIUM SHARED')) {
             bedroom = 'Shared';
@@ -93,28 +156,22 @@ export async function scrapeSpeedhome(areaSlug: string): Promise<Property[]> {
           }
         }
 
-        // Extract price (format: "RM 1,700 / month")
+        // Extract price
         const priceMonthMatch = fullText.match(/RM\s*([\d,]+)\s*\/\s*month/i);
         const priceMonthly = priceMonthMatch
           ? parseInt(priceMonthMatch[1].replace(/,/g, ''), 10)
           : 0;
-        // Fallback: extract standalone RM number
         const priceFallbackMatch = !priceMonthMatch ? fullText.match(/RM\s*([\d,]+)/) : null;
         const priceMonthlyFallback = priceFallbackMatch
           ? parseInt(priceFallbackMatch[1].replace(/,/g, ''), 10)
           : 0;
         const finalPriceMonthly = priceMonthly || priceMonthlyFallback;
 
-        // Daily price not available on SPEEDHOME listing cards
         const priceDaily = undefined;
 
-        // Furnishing status not available on SPEEDHOME listing cards
-        // Only available on detail page (/details/...)
-        const furnitureStatus = 'Not specified';
-
-        // Only add jika ada minimum data (title & price)
+        // Only add jika ada minimum data
         if (title && finalPriceMonthly > 0) {
-          properties.push({
+          basicProperties.push({
             title,
             propertyName: title.split(',')[0]?.trim() || title,
             bedroom,
@@ -122,8 +179,9 @@ export async function scrapeSpeedhome(areaSlug: string): Promise<Property[]> {
             priceYearly: finalPriceMonthly * 12,
             priceDaily,
             sizeSquft,
-            furnitureStatus,
+            furnitureStatus: 'Loading...', // Will be updated
             url: `https://speedhome.com${href}`,
+            needsFurnishing: true,
           });
         }
       } catch (e) {
@@ -131,10 +189,27 @@ export async function scrapeSpeedhome(areaSlug: string): Promise<Property[]> {
       }
     });
 
+    console.log(`✅ Extracted ${basicProperties.length} basic property data`);
+
+    // Now scrape furnishing from detail pages (limit to first 15 for performance)
+    const propertiesWithFurnishing = await scrapeFurnishingDetails(
+      page,
+      basicProperties.slice(0, 15)
+    );
+
+    // Add remaining properties without furnishing (if >15)
+    if (basicProperties.length > 15) {
+      const remaining = basicProperties.slice(15).map(p => ({
+        ...p,
+        furnitureStatus: 'Not specified',
+      }));
+      propertiesWithFurnishing.push(...remaining);
+    }
+
     await page.close();
 
-    console.log(`✅ Successfully scraped ${properties.length} properties from ${areaSlug}`);
-    return properties;
+    console.log(`✅ Successfully scraped ${propertiesWithFurnishing.length} properties from ${areaSlug}`);
+    return propertiesWithFurnishing;
   } catch (error) {
     console.error(`❌ Scraping error for ${areaSlug}:`, error);
     throw new Error(`Failed to scrape ${areaSlug}: ${error instanceof Error ? error.message : String(error)}`);
